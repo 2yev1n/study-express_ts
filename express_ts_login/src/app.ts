@@ -4,6 +4,7 @@ import morgan from "morgan"
 import * as dotenv from "dotenv";
 import path from 'path';
 import { User } from './models/user';
+import router from "./routes";
 
 const app = express();
 const PORT = process.env.PORT||3000;
@@ -16,6 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.set("jwt-secret", process.env.JWT_KEY);
+
+app.use("/", router);
 
 app.get('/welcome', (req: Request, res: Response, next: NextFunction) => {
     res.send('welcome!');
