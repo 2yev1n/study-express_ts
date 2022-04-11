@@ -2,6 +2,7 @@ import { sequelize } from "../config/config";
 import Sequelize, { Model } from "sequelize";
 
 export class User extends Model {
+    readonly id!: number;
     name!: string;
     password!:string;
     email!: string;
@@ -12,8 +13,8 @@ User.init(
     {
         id: {
             type: Sequelize.INTEGER,
-            allowNull: false,
             primaryKey: true,
+            autoIncrement: true,
         },
         name: {
             type: Sequelize.STRING(5),
@@ -21,6 +22,10 @@ User.init(
         },
         email: {
             type: Sequelize.STRING(30),
+            allowNull: false
+        },
+        password: {
+            type: Sequelize.STRING,
             allowNull: false
         },
         accessToken: {
