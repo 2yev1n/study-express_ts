@@ -1,6 +1,4 @@
-import { resolveSoa } from "dns";
 import { Request, Response, NextFunction } from "express";
-import { userInfo } from "os";
 import * as query from "./query";
 import { access } from "./token";
 
@@ -43,6 +41,4 @@ export const signIn = async(req: Request, res: Response) => {
             message: "존재하지 않는 이메일"
         });
     };
-
-
 }
