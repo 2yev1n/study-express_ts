@@ -10,7 +10,7 @@ router.get("/mail", (req, res) => {
         let emailParam = {
             toEmail: email,
             subject: "nodemailer 연습!",
-            text: email + "님께 사랑합니다~ㅎㅎ"
+            text: email + "님께 사랑합니다~ㅎㅎ 오늘도 좋은 하루 보내세요. 스펨이메일 아닙니다. 이것은 이예빈의 연습용 nodemailer이라고요!!!!!"
         };
     
         mailSender.sendGamil(emailParam);
