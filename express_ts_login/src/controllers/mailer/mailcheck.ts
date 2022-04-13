@@ -10,6 +10,10 @@ export const mailCheck = async(req: Request, res: Response) => {
 
         if(number == authNum){
             console.log("인증성공!");
+
+            res.status(200).json({
+                message: "인증 성공!"
+            });
         }
         else throw Error;   
     } catch(err) {
