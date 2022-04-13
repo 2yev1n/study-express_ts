@@ -4,7 +4,7 @@ import morgan from "morgan"
 import * as dotenv from "dotenv";
 import path from 'path';
 import { User } from './models/user';
-import router from "./routes";
+import router from "./routes/index";
 
 const app = express();
 const PORT = process.env.PORT||3000;
