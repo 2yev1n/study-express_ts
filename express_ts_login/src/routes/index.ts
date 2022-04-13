@@ -5,6 +5,6 @@ import mailer from "./mailer";
 const router = express();
 
 router.use("/user", user);
-router.use("/", mailer);
+router.use("/mail", mailer);
 
 export default router;
