@@ -1,20 +1,27 @@
 import express from "express";
 import { mailSender } from "../controllers/mailer/mailer";
+import * as Mail from "../controllers/mailer/mailcheck";
+
 
 const router = express();
 
-router.get("/mail", (req, res) => {
+export let authNum: string;
+
+router.get("/", (req, res) => {
     const { email } = req.body;
+
+    authNum = Math.random().toString().substr(2,6);
 
     try{
         let emailParam = {
             toEmail: email,
             subject: "nodemailer 연습!",
-            text: email + "님께 사랑합니다~ㅎㅎ 오늘도 좋은 하루 보내세요. 스펨이메일 아닙니다. 이것은 이예빈의 연습용 nodemailer이라고요!!!!!"
+            text: email + "님께\n" + "인증번호입니다! ->"+ authNum,
         };
     
         mailSender.sendGamil(emailParam);
 
+        console.log(authNum);
         res.status(200).send("이메일 보내기 성공");
     } catch(err) {
         console.error(err);
@@ -23,6 +30,8 @@ router.get("/mail", (req, res) => {
             message: "이메일 보내기 실패"
         })
     }
-})
+});
+
+router.post("/check", Mail.mailCheck);
 
 export default router;
