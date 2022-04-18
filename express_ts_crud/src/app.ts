@@ -6,7 +6,7 @@ import * as dotenv from "dotenv";
 import router from './routes';
 
 const app = express();
-const PORT= process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 dotenv.config({ path: path.join(__dirname, "../env") });
 app.use(morgan("dev"));
