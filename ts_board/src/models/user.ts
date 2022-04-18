@@ -1,4 +1,4 @@
-import { sequelize } from "../config/config";
+import sequelize from "./index";
 import Sequelize, { Model } from "sequelize";
 import { Board } from "./board";
 
