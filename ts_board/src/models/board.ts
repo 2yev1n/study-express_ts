@@ -1,10 +1,11 @@
-import { sequelize } from "../config/config";
+import sequelize from "./index";
 import Sequelize, { Model } from "sequelize";
 
 export class Board extends Model {
     readonly id!: number;
     title!: string;
     content!: Text;
+    writer!: number;
 }
 
 Board.init(
@@ -21,6 +22,10 @@ Board.init(
         content: {
             type: Sequelize.TEXT,
             allowNull: false,
+        },
+        writer: {
+            type: Sequelize.INTEGER,
+            allowNull: false
         }
     },
     {
