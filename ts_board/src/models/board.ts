@@ -37,3 +37,5 @@ Board.init(
         collate: "UTF8MB4_GENERAL_CI"
     }
 );
+
+export default Board;
