@@ -1,5 +1,9 @@
 import { Sequelize } from "sequelize";
 import config from "../config/database";
+import User from "./user";
+import Board from "./board";
+
+const db = {};
 
 const sequelize = new Sequelize(
     config.database.database,
@@ -18,7 +22,7 @@ const sequelize = new Sequelize(
             acquire: 3000,
             idle: 10000
         }
-    }
+    } 
 );
 
 export default sequelize;
