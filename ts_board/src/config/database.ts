@@ -3,7 +3,7 @@ import path from "path";
 
 dotenv.config({ path: path.join(__dirname + "../../../.env") });
 
-const Config = {
+const config = {
     test_module: false,
     database: {
         host: process.env.HOST || "",
@@ -14,4 +14,4 @@ const Config = {
     }
 };
 
-export default Config;
+export default config;
