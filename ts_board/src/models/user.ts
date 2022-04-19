@@ -2,13 +2,13 @@ import sequelize from "./index";
 import Sequelize, { Model } from "sequelize";
 import { Board } from "./board";
 
- export class User extends Model{
+export class User extends Model{
     readonly id!: number;
     name!: string;
     password!: string;
     email!: string;
     accessToken!: string;
-}
+ }
 
 User.init(
     {
@@ -41,3 +41,5 @@ User.init(
 
 User.hasMany(Board, { foreignKey: "writer", sourceKey: "id" });
 Board.belongsTo(User, { foreignKey: "wirter" });
+
+export default User; 
