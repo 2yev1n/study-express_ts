@@ -1,14 +1,18 @@
-import sequelize from "./index";
+import { sequelize } from "../config/config";
 import Sequelize, { Model } from "sequelize";
 import { Board } from "./board";
 
+
 export class User extends Model{
-    readonly id!: number;
+    id!: number;
     name!: string;
     password!: string;
     email!: string;
     accessToken!: string;
  }
+
+User.hasMany(Board, { foreignKey: "writer", sourceKey: "id" });
+Board.belongsTo(User, { foreignKey: "wirter" });
 
 User.init(
     {
@@ -38,8 +42,6 @@ User.init(
         collate: "UTF8_GENERAL_CI"
     }
 );
-
-User.hasMany(Board, { foreignKey: "writer", sourceKey: "id" });
-Board.belongsTo(User, { foreignKey: "wirter" });
-
-export default User; 
+(async () => {
+    await sequelize.sync();
+});
