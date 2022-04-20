@@ -1,12 +1,15 @@
-import sequelize from "./index";
-import Sequelize, { Model } from "sequelize";
+import { sequelize } from "../config/config";
+import Sequelize, { ForeignKey, Model } from "sequelize";
+import { User } from "./user";
 
 export class Board extends Model {
     readonly id!: number;
     title!: string;
     content!: Text;
-    writer!: number;
+    writer!: ForeignKey<number>;
 }
+
+Board.belongsTo(User);
 
 Board.init(
     {
@@ -22,10 +25,6 @@ Board.init(
         content: {
             type: Sequelize.TEXT,
             allowNull: false,
-        },
-        writer: {
-            type: Sequelize.INTEGER,
-            allowNull: false
         }
     },
     {
