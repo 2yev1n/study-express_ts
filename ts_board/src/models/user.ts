@@ -1,37 +1,43 @@
 import { sequelize } from "../config/config";
-import Sequelize, { Model } from "sequelize";
+import { Sequelize, DataTypes, Model } from "sequelize";
 import { Board } from "./board";
 
+// export interface User {
+//     id: number;
+//     name: string;
+//     password: string;
+//     email: string;
+// }
+
+// type UserCreateInterface = Pick<User, 'id'>;
 
 export class User extends Model{
     id!: number;
     name!: string;
     password!: string;
     email!: string;
-    accessToken!: string;
- }
+}
 
-User.hasMany(Board, { foreignKey: "writer", sourceKey: "id" });
-Board.belongsTo(User, { foreignKey: "wirter" });
-
-User.init(
+export default function(sequelize: Sequelize) : typeof User {
+    User.init(
     {
         id: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
         name: {
-            type: Sequelize.STRING(5),
+            type: DataTypes.STRING(5),
             allowNull: false,
         },
         email: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        accessToken: {
-            type: Sequelize.STRING,
-        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        }
     },
     {
         sequelize,
@@ -41,7 +47,7 @@ User.init(
         charset: "UTF8",
         collate: "UTF8_GENERAL_CI"
     }
-);
-(async () => {
-    await sequelize.sync();
-});
+    );
+    return User;
+}
+

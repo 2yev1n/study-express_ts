@@ -1,29 +1,26 @@
-import { sequelize } from "../config/config";
-import Sequelize, { ForeignKey, Model } from "sequelize";
-import { User } from "./user";
+import { Sequelize, DataTypes, ForeignKey, Model } from "sequelize";
 
 export class Board extends Model {
-    readonly id!: number;
+    id!: number;
     title!: string;
     content!: Text;
     writer!: ForeignKey<number>;
 }
 
-Board.belongsTo(User);
-
-Board.init(
+export default function(sequelize: Sequelize) : typeof Board {
+    Board.init(
     {
         id: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
         title: {
-            type: Sequelize.STRING(20),
+            type: DataTypes.STRING(20),
             allowNull: false,
         },
         content: {
-            type: Sequelize.TEXT,
+            type: DataTypes.TEXT,
             allowNull: false,
         }
     },
@@ -35,6 +32,7 @@ Board.init(
         charset: "UTF8MB4",
         collate: "UTF8MB4_GENERAL_CI"
     }
-);
-
-export default Board;
+    );
+    
+    return Board;
+};
