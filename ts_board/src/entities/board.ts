@@ -11,7 +11,7 @@ import {
 
 import { User } from "./user";
 
-@Entity()
+@Entity({ name: "boards" })
 export class Board{
     @PrimaryGeneratedColumn()
     id!: number;
