@@ -1,4 +1,3 @@
-import { text } from "stream/consumers";
 import {
     Column, 
     Entity, 
@@ -11,8 +10,8 @@ import {
 
 import { User } from "./user";
 
-@Entity({ name: "boards" })
-export class Board{
+@Entity({ name: "posts" })
+export class Post{
     @PrimaryGeneratedColumn()
     id!: number;
 
@@ -24,7 +23,7 @@ export class Board{
 
     @ManyToOne(
         () => User,
-        (user) => user.board,
+        (user) => user.post,
         { nullable : false }
     )
     @JoinColumn({ name: "writer" })

@@ -5,7 +5,7 @@ import {
     CreateDateColumn,
     OneToMany
 } from "typeorm";
-import { Board } from "./board";
+import { Post } from "./post";
 
 @Entity({ name: "users"})
 export class User {
@@ -23,10 +23,10 @@ export class User {
     password!: string;
 
     @OneToMany(
-        (type) => Board, 
-        (board) => board.writer,
+        (type) => Post, 
+        (post) => post.writer,
         )
-    board!: Board[];
+    post!: Post[];
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt!: Date;
