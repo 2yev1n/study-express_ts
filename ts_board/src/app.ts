@@ -8,12 +8,15 @@ import router from "./routes/index";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+dotenv.config();
+dotenv.config({ path: path.join(__dirname, "../../.env") });
+
 app.use(morgan("dev"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended : false }));
 
-dotenv.config({ path: path.join(__dirname, "../../.env") });
+app.set("jwt-secret", process.env.JWT_KEY);
 
 app.use("/", router);
 
