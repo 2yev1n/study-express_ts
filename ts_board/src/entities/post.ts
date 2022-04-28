@@ -27,7 +27,7 @@ export class Post{
         { nullable : false }
     )
     @JoinColumn({ name: "writer" })
-    writer!: number;
+    writer!: string;
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt!: Date;
