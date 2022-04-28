@@ -54,6 +54,36 @@ export async function readPost(req: Request, res: Response, next: NextFunction) 
     }
 };
 
+export async function readMyPost(req: Request, res: Response, next: NextFunction) {
+    const postRepository = getManager().getRepository(Post);
+
+    const writer = (<any>req).decoded.id;
+
+    try{
+        const posts = await postRepository.find({
+            where: {
+                writer : writer
+            }
+        });
+
+        console.log(writer, posts);
+
+        if(posts == null) {
+            throw Error;
+        };
+
+        res.status(200).json({
+            writer
+        });
+
+    } catch(err) {
+        console.error(err);
+        res.status(404).json({
+            message: "게시글 찾을 수 없음",
+        });
+    }
+};
+
 export async function updatePost(req: Request, res: Response, next: NextFunction) {
     const postRepository = getManager().getRepository(Post);
 
