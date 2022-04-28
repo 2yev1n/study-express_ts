@@ -58,7 +58,7 @@ export async function signIn(req: Request, res: Response) {
             const accessToken =jwt.sign(
                 {
                     email: user?.email,
-                    name: user?.name
+                    id: user?.id
                 }, secretKey,
                 {
                     expiresIn: "1h",
