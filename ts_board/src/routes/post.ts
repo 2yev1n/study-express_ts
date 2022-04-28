@@ -5,5 +5,6 @@ const router = express();
 
 router.post("/write", authMiddleware, Post.wirtePost);
 router.get("/:id", Post.readPost);
+router.patch("/:id", authMiddleware, Post.updatePost);
 
 export default router;

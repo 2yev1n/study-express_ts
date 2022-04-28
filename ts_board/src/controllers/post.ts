@@ -1,6 +1,8 @@
 import { Post } from "../entities/post";
 import { Request, Response, NextFunction } from "express";
 import { getManager } from "typeorm";
+import { writer } from "repl";
+import { RestartProcess } from "concurrently";
 
 export async function wirtePost(req: Request, res: Response, next: NextFunction) {
     const postRepository = getManager().getRepository(Post);
@@ -47,6 +49,49 @@ export async function readPost(req: Request, res: Response, next: NextFunction) 
         });
 
     } catch(err) {
+        console.error(err);
+        res.status(404).json({
+            message: "해당 게시글 없음",
+        });
+    }
+};
+
+export async function updatePost(req: Request, res: Response, next: NextFunction) {
+    const postRepository = getManager().getRepository(Post);
+
+    const id = req.params.id;
+    const { title, content } = req.body;
+    const writer = (<any>req).decoded.id;
+    
+    try{
+        
+        const post = await postRepository.findOne({
+            where: {
+                id: id,
+                writer: writer
+            }
+        });
+
+        if(post == null){
+            res.status(403).json({
+                message: "게시글 주인만 수정 가능"
+            });
+        }
+        else {
+            await postRepository.update({
+                id: id,
+                writer: writer
+            }, {
+                title: title,
+                content: content,
+            });
+    
+            res.status(200).json({
+                message: "게시글 수정 성공",
+            });
+        }
+    } catch(err) {
+        console.error(err);
         res.status(404).json({
             message: "해당 게시글 없음",
         });
