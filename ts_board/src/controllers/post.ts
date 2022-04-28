@@ -6,7 +6,7 @@ export async function wirtePost(req: Request, res: Response, next: NextFunction)
     const postRepository = getManager().getRepository(Post);
 
     const { title, content } = req.body;
-    const writer = (<any>req)["decoded"].id;
+    const writer = (<any>req).decoded.id;
 
     try {
         const newPost = postRepository.create({
