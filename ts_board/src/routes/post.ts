@@ -7,5 +7,6 @@ router.post("/write", authMiddleware, Post.wirtePost);
 router.get("/:id", Post.readPost);
 router.patch("/:id", authMiddleware, Post.updatePost);
 router.delete("/:id", authMiddleware, Post.deletePost);
+router.get("/mypage", authMiddleware, Post.readMyPost);
 
 export default router;
