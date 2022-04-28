@@ -66,14 +66,12 @@ export async function readMyPost(req: Request, res: Response, next: NextFunction
             }
         });
 
-        console.log(writer, posts);
-
         if(posts == null) {
             throw Error;
         };
 
         res.status(200).json({
-            writer
+            posts
         });
 
     } catch(err) {
