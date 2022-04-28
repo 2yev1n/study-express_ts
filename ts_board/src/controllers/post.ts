@@ -1,8 +1,6 @@
 import { Post } from "../entities/post";
 import { Request, Response, NextFunction } from "express";
 import { getManager } from "typeorm";
-import { writer } from "repl";
-import { RestartProcess } from "concurrently";
 
 export async function wirtePost(req: Request, res: Response, next: NextFunction) {
     const postRepository = getManager().getRepository(Post);
@@ -73,11 +71,8 @@ export async function updatePost(req: Request, res: Response, next: NextFunction
         });
 
         if(post == null){
-            res.status(403).json({
-                message: "게시글 주인만 수정 가능"
-            });
-        }
-        else {
+            throw Error;
+        } else {
             await postRepository.update({
                 id: id,
                 writer: writer
@@ -92,8 +87,41 @@ export async function updatePost(req: Request, res: Response, next: NextFunction
         }
     } catch(err) {
         console.error(err);
-        res.status(404).json({
-            message: "해당 게시글 없음",
+        res.status(403).json({
+            message: "게시글 수정 실패",
         });
     }
 };
+
+export async function deletePost(req: Request, res: Response, next: NextFunction) {
+    const postRepository = getManager().getRepository(Post);
+
+    const id = req.params.id;
+    const writer = (<any>req).decoded.id;
+
+    try{
+        const post = await postRepository.findOne({
+            where: {
+                id: id,
+                writer: writer,
+            }
+        });
+
+        if(post == null) {
+            throw Error;
+        } else {
+            await postRepository.delete({
+                id: id
+            });
+            
+            res.status(200).json({
+                message: "게시글 삭제 성공",
+            });
+        }
+    } catch(err) {
+        console.error(err);
+        res.status(403).json({
+            message: "게시글 삭제 실패",
+        });
+    }
+}
