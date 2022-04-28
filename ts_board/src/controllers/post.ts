@@ -26,7 +26,29 @@ export async function wirtePost(req: Request, res: Response, next: NextFunction)
         console.error(err);
         res.status(400).json({
             message: "글 작성 실패",
-        })
+        });
     }
+};
 
-}
+export async function readPost(req: Request, res: Response, next: NextFunction) {
+    const postRepository = getManager().getRepository(Post);
+
+    const id = req.params.id;
+
+    try{
+        const post = await postRepository.findOne({
+            where: {
+                id : id
+            }
+        });
+
+        res.status(200).json({
+            post
+        });
+
+    } catch(err) {
+        res.status(404).json({
+            message: "해당 게시글 없음",
+        });
+    }
+};
