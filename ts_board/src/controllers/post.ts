@@ -4,15 +4,20 @@ import { getManager } from "typeorm";
 
 export async function wirtePost(req: Request, res: Response, next: NextFunction) {
     const postRepository = getManager().getRepository(Post);
-
+   
     const { title, content } = req.body;
+    const image = req.file;
     const writer = (<any>req).decoded.id;
 
+    console.log(image, title, content);
+
     try {
+        
         const newPost = postRepository.create({
             title,
             content,
             writer,
+            image : image?.filename
         });
 
         await postRepository.save(newPost);
