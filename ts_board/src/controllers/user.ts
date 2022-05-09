@@ -6,7 +6,6 @@ import { getManager } from "typeorm";
 
 const salt = process.env.SALT;
 
-
 export async function signUp(req: Request, res: Response) {
     const userRepository = getManager().getRepository(User);
 
