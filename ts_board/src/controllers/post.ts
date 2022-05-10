@@ -17,7 +17,7 @@ export async function wirtePost(req: Request, res: Response, next: NextFunction)
             title,
             content,
             writer,
-            image : image?.filename
+            image : image?.location
         });
 
         await postRepository.save(newPost);
