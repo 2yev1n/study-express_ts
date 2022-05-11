@@ -4,8 +4,8 @@ import aws from "aws-sdk";
 
 const s3 = new aws.S3({
     accessKeyId: process.env.ACCESSKEY,
-    secretAccessKey: process.env.SECREYACCESSKEY,
-    region: process.env.REGION
+    secretAccessKey: process.env.SECRETACCESSKEY,
+    region: "ap-northeast-2"
 });
 
 export const upload = multer({
