@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import morgan from "morgan";    // 웹 서버에 들어오는 요청을 shell에 출력해주는 패키지
 import * as dotenv from "dotenv";
+import 'dotenv/config';
 import path from "path";
 import { createConnection } from "typeorm";
 import router from "./routes/index";
@@ -8,7 +9,6 @@ import router from "./routes/index";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-dotenv.config();
 dotenv.config({ path: path.join(__dirname, "../../.env") });
 
 app.use(morgan("dev"));
