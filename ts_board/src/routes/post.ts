@@ -5,7 +5,7 @@ import { upload } from "../middleware/upload";
 
 const router = express();
 
-router.post("/write", authMiddleware,upload.array('image'),  Post.wirtePost);
+router.post("/write", authMiddleware, upload.single('image'),  Post.wirtePost);
 router.get("/mypage", authMiddleware, Post.readMyPost);
 router.get("/:id", Post.readPost);
 router.patch("/:id", authMiddleware, Post.updatePost);
