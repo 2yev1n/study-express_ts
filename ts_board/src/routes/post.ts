@@ -1,6 +1,6 @@
 import express from "express";
 import * as Post from "../controllers/post";
-import { authMiddleware } from "../middleware/auth.";
+import { authMiddleware } from "../middleware/auth";
 import { upload } from "../middleware/upload";
 
 const router = express();
