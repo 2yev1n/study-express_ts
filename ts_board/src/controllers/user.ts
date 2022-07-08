@@ -28,7 +28,7 @@ export async function signUp(req: Request, res: Response) {
             message: "회원가입 성공",
         });
     } catch(err) {
-        res.status(400).json({
+        res.status(409).json({
             message: "이미 있는 이메일"
         });
         console.error(err);
