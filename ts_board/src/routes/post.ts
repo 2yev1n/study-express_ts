@@ -1,14 +1,15 @@
 import express from "express";
-import * as Post from "../controllers/post";
+import * as controller from "../controllers/post";
 import { authMiddleware } from "../middleware/auth";
 import { upload } from "../middleware/upload";
 
 const router = express();
 
-router.post("/write", authMiddleware, upload.single('image'),  Post.wirtePost);
-router.get("/mypage", authMiddleware, Post.readMyPost);
-router.get("/:id", Post.readPost);
-router.patch("/:id", authMiddleware, Post.updatePost);
-router.delete("/:id", authMiddleware, Post.deletePost);
+router.post("/", authMiddleware, upload.single('image'),  controller.wirtePost);
+router.get("/", controller.readAllPost);
+router.get("/mypage", authMiddleware, controller.readMyPost);
+router.get("/:id", controller.readPost);
+router.patch("/:id", authMiddleware, controller.updatePost);
+router.delete("/:id", authMiddleware, controller.deletePost);
 
 export default router;
