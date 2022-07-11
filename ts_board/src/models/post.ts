@@ -2,9 +2,12 @@ import Sequelize, { Model } from "sequelize";
 import { sequelize } from "../config/config";
 
 export class Post extends Model {
+    public readonly id!: number;
     title!: string;
     content!: string;
     image!: string;
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
 }
 
 Post.init(
