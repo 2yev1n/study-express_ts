@@ -1,30 +1,26 @@
-import { Post } from "../entities/post";
+import { Post } from "../models/post";
 import { Request, Response, NextFunction } from "express";
-import { getManager } from "typeorm";
+import { RebootRequest } from "aws-sdk/clients/workspaces";
 
-export async function wirtePost(req: Request, res: Response, next: NextFunction) {
-    const postRepository = getManager().getRepository(Post);
-   
+export const wirtePost = async (req: Request, res: Response, next: NextFunction) => {
+
     const { title, content } = req.body;
     const image = req.file;
     const writer = (<any>req).decoded.id;
 
-    console.log(image, title, content);
+    console.log(title, content, writer, image);
 
     try {
         
-        const newPost = postRepository.create({
+        const newPost = Post.create({
             title,
             content,
             writer,
             image: (<any>image)?.location
         });
 
-        await postRepository.save(newPost);
-
         res.status(200).json({
-            message: "글 작성 성공",
-            newPost
+            message: "글 작성 성공"
         }); 
 
     } catch(err) {
@@ -35,13 +31,12 @@ export async function wirtePost(req: Request, res: Response, next: NextFunction)
     }
 };
 
-export async function readPost(req: Request, res: Response, next: NextFunction) {
-    const postRepository = getManager().getRepository(Post);
+export const readPost = async (req: Request, res: Response, next: NextFunction) => {
 
     const id = req.params.id;
 
     try{
-        const post = await postRepository.findOne({
+        const post = await Post.findOne({
             where: {
                 id : id
             }
@@ -54,18 +49,38 @@ export async function readPost(req: Request, res: Response, next: NextFunction) 
     } catch(err) {
         console.error(err);
         res.status(404).json({
-            message: "해당 게시글 없음",
+            message: "해당 게시글 찾을 수 없음",
         });
     }
 };
 
-export async function readMyPost(req: Request, res: Response, next: NextFunction) {
-    const postRepository = getManager().getRepository(Post);
+export const readAllPost = async(req: Request, res: Response) => {
+    try{
+        const posts = await Post.findAll();
+
+        if(posts == null) {
+            throw Error;
+        };
+
+        res.status(200).json({
+            message: "게시물 조회 성공",
+            posts
+        });
+        
+    } catch(err) {
+        console.error(err);
+        res.status(404).json({
+            message: "게시물 찾을 수 없음"
+        })
+    }
+}
+
+export const readMyPost = async (req: Request, res: Response, next: NextFunction) => {
 
     const writer = (<any>req).decoded.id;
-
+    console.log(writer);
     try{
-        const posts = await postRepository.find({
+        const posts = await Post.findAll({
             where: {
                 writer : writer
             }
@@ -82,21 +97,19 @@ export async function readMyPost(req: Request, res: Response, next: NextFunction
     } catch(err) {
         console.error(err);
         res.status(404).json({
-            message: "게시글 찾을 수 없음",
+            message: "나의 게시글 찾을 수 없음",
         });
     }
 };
 
-export async function updatePost(req: Request, res: Response, next: NextFunction) {
-    const postRepository = getManager().getRepository(Post);
-
+export const updatePost = async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
     const { title, content } = req.body;
     const writer = (<any>req).decoded.id;
     
     try{
         
-        const post = await postRepository.findOne({
+        const post = await Post.findOne({
             where: {
                 id: id,
                 writer: writer
@@ -106,10 +119,7 @@ export async function updatePost(req: Request, res: Response, next: NextFunction
         if(post == null){
             throw Error;
         } else {
-            await postRepository.update({
-                id: id,
-                writer: writer
-            }, {
+            await post.update({
                 title: title,
                 content: content,
             });
@@ -126,14 +136,13 @@ export async function updatePost(req: Request, res: Response, next: NextFunction
     }
 };
 
-export async function deletePost(req: Request, res: Response, next: NextFunction) {
-    const postRepository = getManager().getRepository(Post);
+export const deletePost = async(req: Request, res: Response, next: NextFunction) => {
 
     const id = req.params.id;
     const writer = (<any>req).decoded.id;
 
     try{
-        const post = await postRepository.findOne({
+        const post = await Post.findOne({
             where: {
                 id: id,
                 writer: writer,
@@ -143,9 +152,7 @@ export async function deletePost(req: Request, res: Response, next: NextFunction
         if(post == null) {
             throw Error;
         } else {
-            await postRepository.delete({
-                id: id
-            });
+            await post.destroy();
             
             res.status(200).json({
                 message: "게시글 삭제 성공",
@@ -157,4 +164,4 @@ export async function deletePost(req: Request, res: Response, next: NextFunction
             message: "게시글 삭제 실패",
         });
     }
-}
+};
