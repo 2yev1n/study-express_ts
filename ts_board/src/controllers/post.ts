@@ -1,6 +1,5 @@
 import { Post } from "../models/post";
 import { Request, Response, NextFunction } from "express";
-import { RebootRequest } from "aws-sdk/clients/workspaces";
 
 export const wirtePost = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -66,7 +65,7 @@ export const readAllPost = async(req: Request, res: Response) => {
             message: "게시물 조회 성공",
             posts
         });
-        
+
     } catch(err) {
         console.error(err);
         res.status(404).json({
