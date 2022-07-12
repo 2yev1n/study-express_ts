@@ -1,5 +1,7 @@
+import { doesNotMatch } from "assert";
 import chai from "chai";
 import chaiHttp from "chai-http";
+import { disconnect } from "process";
 import app from "../app";
 
 const expect = chai.expect;
@@ -56,5 +58,14 @@ describe("Post spec Test", () => {
             });
     });
 
-
+    it("DELETE post/1 (403)", (done) => {
+        chai
+            .request(app)
+            .delete("/post/1")
+            .set("access-token", token)
+            .end((err, res) => {
+                expect(res).to.have.status(403);
+                done();
+            });
+    });
 });
