@@ -10,8 +10,7 @@ export const wirtePost = async (req: Request, res: Response, next: NextFunction)
     console.log(title, content, writer, image);
 
     try {
-        
-        const newPost = Post.create({
+        Post.create({
             title,
             content,
             writer,
