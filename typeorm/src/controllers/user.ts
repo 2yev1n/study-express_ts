@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import { User } from "../entity/User";
+import { User } from "../entity/user";
 import crypto from "crypto";
 import { getManager } from "typeorm";
 
