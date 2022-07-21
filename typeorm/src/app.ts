@@ -3,7 +3,7 @@ import { createConnection } from "typeorm";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import express, { Request, Response, NextFunction } from "express";
-import router from "./routes/user";
+import router from "./routes/index";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.set("jwt-secret", process.env.KEY);
 
-app.use('/user', router);
+app.use('/', router);
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
     res.send('Hello, World');
