@@ -21,7 +21,7 @@
     "typeorm": "0.3.7"
   },
   "scripts": {
-    "start": "ts-node src/app.ts",
+    "start": "nodemon src/app.ts",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "main": "app.ts",
