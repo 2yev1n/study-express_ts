@@ -5,8 +5,9 @@ import {
     CreateDateColumn,
     OneToMany
 } from "typeorm"
+import { Post } from "./post";
 
-@Entity({ name:  "users" })
+@Entity({ name:  'users' })
 export class User {
     @PrimaryGeneratedColumn()
     id: number
@@ -19,6 +20,12 @@ export class User {
 
     @Column()
     password: string;
+
+    @OneToMany(
+        (type) => Post,
+        (post) => post.writer,
+    )
+    post!: Post[];
 
     @CreateDateColumn({ name: 'createdAt'})
     createdAt: Date;
