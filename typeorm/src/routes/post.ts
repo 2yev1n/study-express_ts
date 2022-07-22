@@ -6,5 +6,6 @@ const router = express();
 
 router.post("/", authMiddleware, controller.createPost);
 router.patch("/:id", authMiddleware, controller.updatePost);
+router.delete("/:id", authMiddleware, controller.deletePost);
 
 export default router;

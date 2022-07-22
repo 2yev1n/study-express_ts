@@ -69,3 +69,35 @@ export async function updatePost(req: Request, res: Response) {
         })
     }
 };
+
+export async function deletePost(req: Request, res: Response) {
+    const postRepository = getManager().getRepository(Post);
+
+    const id = req.params.id;
+    const writer = (<any>req).decoded.id;
+
+    try{
+        const post = await postRepository.findOne({
+            where: {
+                id
+            }
+        });
+
+        if(post.writer == writer) {
+            postRepository.delete({
+                id: id
+            });
+
+            res.status(200).json({
+                message: "게시물 삭제 성공"
+            });
+
+        } else throw Error;
+    } catch(err) {
+        console.error(err);
+
+        res.status(403).json({
+            message: "게시물 삭제 실패"
+        })
+    }
+};
