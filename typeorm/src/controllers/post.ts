@@ -101,3 +101,27 @@ export async function deletePost(req: Request, res: Response) {
         })
     }
 };
+
+export async function readOnePost(req: Request, res: Response) {
+    const postRepository = getManager().getRepository(Post);
+
+    const id = req.params.id;
+
+    try{
+        const post = postRepository.findOne({
+            where: {
+                id: id
+            }
+        });
+        if(post == null) throw Error;
+
+        res.status(200).json({
+            post
+        });
+    } catch(err) {
+        console.error(err);
+        res.status(404).json({
+            message: "해당 게시물 없음"
+        });
+    };
+};
