@@ -108,19 +108,19 @@ export async function readOnePost(req: Request, res: Response) {
     const id = req.params.id;
 
     try{
-        const post = postRepository.findOne({
+        const post = await postRepository.findOne({
             where: {
                 id: id
             }
         });
         if(post == null) throw Error;
 
-        res.status(200).json({
+        return res.status(200).json({
             post
         });
     } catch(err) {
         console.error(err);
-        res.status(404).json({
+        return res.status(404).json({
             message: "해당 게시물 없음"
         });
     };
