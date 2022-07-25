@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { Post } from "../entity/post";
-import { getManager } from "typeorm";
+import { getManager, TreeRepository } from "typeorm";
 
 export async function createPost(req: Request, res: Response) {
     const postRepository =  getManager().getRepository(Post);
@@ -124,4 +124,23 @@ export async function readOnePost(req: Request, res: Response) {
             message: "해당 게시물 없음"
         });
     };
+};
+
+export async function readAllPost(req: Request, res: Response) {
+    const postRepository = getManager().getRepository(Post);
+
+    try{
+        const posts = await postRepository.find();
+
+        if(posts == null) throw Error;
+
+        return res.status(200).json({
+            posts
+        });
+    } catch(err) {
+        console.error(err);
+        return res.status(404).json({
+            message: "게시물 없음"
+        })
+    }
 };
