@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import express, { Request, Response, NextFunction } from "express";
 import router from "./routes/index";
+import { deflate } from "zlib";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,3 +33,5 @@ app.listen(PORT, () => {
         })
         .catch((err) => console.error(err));
 });
+
+export default app;
