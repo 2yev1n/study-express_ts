@@ -1,2 +1,2 @@
 # study-express_ts
-TypeScript express 시작하기
+TypeScript + express를 사용해보며 정리하는 레포
